@@ -157,7 +157,36 @@ function HomePage() {
                                     {todo.done && <s>{todo.content}</s>}
                                 </td>
                                 <td align="right">
-                                    <button data-type="delete">Apagar</button>
+                                    <button
+                                        data-type="delete"
+                                        onClick={function handleClick() {
+                                            todoController
+                                                .deleteById("sdsds")
+                                                .then(() => {
+                                                    setTodos((currentTodos) => {
+                                                        return currentTodos.filter(
+                                                            (currentTodo) => {
+                                                                if (
+                                                                    currentTodo.id ===
+                                                                    todo.id
+                                                                ) {
+                                                                    return false;
+                                                                }
+
+                                                                return true;
+                                                            }
+                                                        );
+                                                    });
+                                                })
+                                                .catch(() => {
+                                                    console.error(
+                                                        "Failed to delete"
+                                                    );
+                                                });
+                                        }}
+                                    >
+                                        Apagar
+                                    </button>
                                 </td>
                             </tr>
                         ))}
