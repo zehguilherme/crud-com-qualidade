@@ -8,5 +8,10 @@ jobs:
     lint:
         runs-on: ubuntu-latest
         steps:
+            # Commom CI Steps
+            - uses: actions/checkout@v3
+            # ------------------------------------------
+            - name: "Install Dependencies"
+              run: "npm ci"
             - name: "Lint"
-              run: "echo 'Teste'"
+              run: "npm run lint"
