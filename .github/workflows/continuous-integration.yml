@@ -8,5 +8,21 @@ jobs:
     lint:
         runs-on: ubuntu-latest
         steps:
+            # Commom CI Steps
+            - uses: actions/checkout@v3
+            # ------------------------------------------
+            - name: "Install Dependencies"
+              run: "npm ci"
             - name: "Lint"
-              run: "echo 'Teste'"
+              run: "npm run lint"
+    test:
+        runs-on: ubuntu-latest
+        container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+        steps:
+            # Commom CI Steps
+            - uses: actions/checkout@v3
+            # ------------------------------------------
+            - name: "Install Dependencies"
+              run: "npm ci"
+            - name: "Test - Cypress"
+              run: "npm run test"

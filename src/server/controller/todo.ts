@@ -3,6 +3,10 @@ import { todoRepository } from "@server/repository/todo";
 import { NextApiRequest, NextApiResponse } from "next";
 import { z as schema } from "zod";
 
+const TodoCreateBodySchema = schema.object({
+    content: schema.string(),
+});
+
 async function get(request: NextApiRequest, response: NextApiResponse) {
     const query = request.query;
     const page = Number(query.page);
@@ -28,7 +32,7 @@ async function get(request: NextApiRequest, response: NextApiResponse) {
         return;
     }
 
-    const output = todoRepository.get({
+    const output = await todoRepository.get({
         page: page,
         limit: limit,
     });
@@ -39,10 +43,6 @@ async function get(request: NextApiRequest, response: NextApiResponse) {
         todos: output.todos,
     });
 }
-
-const TodoCreateBodySchema = schema.object({
-    content: schema.string(),
-});
 
 async function create(request: NextApiRequest, response: NextApiResponse) {
     const body = TodoCreateBodySchema.safeParse(request.body);
@@ -58,11 +58,21 @@ async function create(request: NextApiRequest, response: NextApiResponse) {
         return;
     }
 
-    const createdTodo = await todoRepository.createByContent(body.data.content);
+    try {
+        const createdTodo = await todoRepository.createByContent(
+            body.data.content
+        );
 
-    response.status(201).json({
-        todo: createdTodo,
-    });
+        response.status(201).json({
+            todo: createdTodo,
+        });
+    } catch (error) {
+        response.status(400).json({
+            error: {
+                message: "Failed to create todo",
+            },
+        });
+    }
 }
 
 async function toggleDone(request: NextApiRequest, response: NextApiResponse) {
