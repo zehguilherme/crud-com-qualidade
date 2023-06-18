@@ -1,0 +1,21 @@
+name: "[CD] Continuous Delivery"
+
+# on:
+#     push:
+#         branches: [master]
+
+on:
+    pull_request:
+        types: [opened, synchronize]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            # Commom CI Steps
+            - uses: actions/checkout@v3
+            # ------------------------------------------
+            - name: "Install Dependencies"
+              run: "npm ci"
+            - name: "Deploy - Vercel"
+              run: "npx vercel --prod"
