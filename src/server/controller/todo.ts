@@ -42,21 +42,34 @@ async function get(request: Request) {
         );
     }
 
-    const output = await todoRepository.get({
-        page: page,
-        limit: limit,
-    });
+    try {
+        const output = await todoRepository.get({
+            page: page,
+            limit: limit,
+        });
 
-    return new Response(
-        JSON.stringify({
-            total: output.total,
-            pages: output.pages,
-            todos: output.todos,
-        }),
-        {
-            status: 200,
-        }
-    );
+        return new Response(
+            JSON.stringify({
+                total: output.total,
+                pages: output.pages,
+                todos: output.todos,
+            }),
+            {
+                status: 200,
+            }
+        );
+    } catch (error) {
+        return new Response(
+            JSON.stringify({
+                error: {
+                    message: "Failed to fetch TODOs",
+                },
+            }),
+            {
+                status: 400,
+            }
+        );
+    }
 }
 
 async function create(request: Request) {
