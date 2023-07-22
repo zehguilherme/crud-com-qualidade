@@ -39,5 +39,6 @@ module.exports = {
         "no-console": ["error", { allow: ["warn", "error"] }],
         "react/no-unknown-property": ["error", { ignore: ["jsx", "global"] }],
         "react/react-in-jsx-scope": ["off"],
+        "prettier/prettier": 0,
     },
 };
