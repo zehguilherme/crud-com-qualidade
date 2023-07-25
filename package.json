@@ -39,8 +39,9 @@
         "start-server-and-test": "^2.0.0"
     },
     "dependencies": {
-        "@supabase/supabase-js": "^2.25.0",
-        "next": "^13.4.3",
+        "@supabase/supabase-js": "2.26.0",
+        "encoding": "^0.1.13",
+        "next": "13.4.12",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "typescript": "^5.0.4",

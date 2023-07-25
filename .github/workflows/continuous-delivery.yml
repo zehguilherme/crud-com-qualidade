@@ -18,4 +18,4 @@ jobs:
             - name: "Install Dependencies"
               run: "npm ci"
             - name: "Deploy - Vercel"
-              run: "npx vercel --prod"
+              run: "npx vercel --prod -Y"
